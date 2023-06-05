@@ -1,11 +1,33 @@
 import React from 'react';
 import { ImageBackground, Image, View } from 'react-native';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from 'firebase/auth';
 
 import { AppForm, AppFormField, SubmitButton } from '../../components/Forms';
-// import { handleSignUp } from '../../firebase/service';
 import styles from './styles';
 
 const RegisterScreen = () => {
+  const auth = getAuth();
+
+  const handleSignUp = async ({ name, email, password }) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      await updateProfile(user, { displayName: name });
+      await user.reload();
+      console.log('User created:', user.displayName);
+    } catch (error) {
+      console.log('Error signing up:', error.code, error.message);
+    }
+  };
+
   return (
     <ImageBackground
       resizeMode='cover'

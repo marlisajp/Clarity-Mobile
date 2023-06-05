@@ -14,7 +14,7 @@ const WelcomeScreen = ({ navigation }) => {
       source={require('../../assets/background.png')}>
       <View style={styles.logoContainer}>
         <Image style={styles.logo} source={require('../../assets/icon.png')} />
-        <Text style={styles.tagLine}>Stay Clear in a Cloudy World</Text>
+        <Text style={styles.tagLine}>Staying Clear in a Cloudy World</Text>
       </View>
       <View style={styles.buttonContainer}>
         <AppLargeButton

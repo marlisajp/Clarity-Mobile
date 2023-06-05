@@ -1,11 +1,26 @@
 import React from 'react';
 import { ImageBackground, Image, View } from 'react-native';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 import styles from './LoginScreenStyles';
 import { AppForm, AppFormField, SubmitButton } from '../../components/Forms';
-// import { handleSignIn } from '../../firebase/service';
 
 const LoginScreen = () => {
+  const auth = getAuth();
+
+  const handleSignIn = async ({ email, password }) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      console.log('User logged in:', user.displayName);
+    } catch (error) {
+      console.log('Error signing in:', error.code, error.message);
+    }
+  };
   return (
     <ImageBackground
       resizeMode='cover'

@@ -1,16 +1,17 @@
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from './firebaseConfig';
-
-initializeApp(firebaseConfig);
+import app from './firebaseConfig';
+app();
 
 import { NavigationContainer } from '@react-navigation/native';
 import navigationTheme from './app/navigation/navigationTheme';
 import AuthNavigator from './app/navigation/AuthNavigator';
+import DashboardScreen from './app/screens/DashboardScreen/DashboardScreen';
 
-export default function App() {
+const App = () => {
   return (
     <NavigationContainer theme={navigationTheme}>
       <AuthNavigator />
     </NavigationContainer>
   );
-}
+};
+
+export default App;

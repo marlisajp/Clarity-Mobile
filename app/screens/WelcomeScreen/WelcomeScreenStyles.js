@@ -17,7 +17,7 @@ export default StyleSheet.create({
   },
   logoContainer: {
     position: 'absolute',
-    top: 70,
+    top: 140,
     alignItems: 'center',
   },
   tagLine: {
