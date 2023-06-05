@@ -3,8 +3,9 @@ import { View, ImageBackground, Text, Image } from 'react-native';
 
 import AppLargeButton from '../../components/Buttons/AppLargeButton';
 import styles from './WelcomeScreenStyles';
+import routes from '../../navigation/routes';
 
-const WelcomeScreen = () => {
+const WelcomeScreen = ({ navigation }) => {
   return (
     <ImageBackground
       resizeMode='cover'
@@ -16,8 +17,15 @@ const WelcomeScreen = () => {
         <Text style={styles.tagLine}>Stay Clear in a Cloudy World</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <AppLargeButton title='Log In' />
-        <AppLargeButton title='Register' color='dark' />
+        <AppLargeButton
+          title='Log In'
+          onPress={() => navigation.navigate(routes.LOGIN)}
+        />
+        <AppLargeButton
+          title='Register'
+          color='dark'
+          onPress={() => navigation.navigate(routes.REGISTER)}
+        />
       </View>
     </ImageBackground>
   );

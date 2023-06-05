@@ -3,8 +3,9 @@ import { ImageBackground, Image, View } from 'react-native';
 
 import styles from './LoginScreenStyles';
 import { AppForm, AppFormField, SubmitButton } from '../../components/Forms';
+import { handleSignIn } from '../../firebase/service';
 
-const LoginScreen = (props) => {
+const LoginScreen = () => {
   return (
     <ImageBackground
       resizeMode='cover'
@@ -15,9 +16,7 @@ const LoginScreen = (props) => {
         <Image style={styles.logo} source={require('../../assets/Login.png')} />
         <AppForm
           initialValues={{ email: '', password: '' }}
-          onSubmit={(values) =>
-            console.log('email:', values.email, 'password:', values.password)
-          }>
+          onSubmit={handleSignIn}>
           <AppFormField
             placeholder='Email'
             icon='email'

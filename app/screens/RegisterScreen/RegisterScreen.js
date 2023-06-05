@@ -2,32 +2,24 @@ import React from 'react';
 import { ImageBackground, Image, View } from 'react-native';
 
 import { AppForm, AppFormField, SubmitButton } from '../../components/Forms';
+import { handleSignUp } from '../../firebase/service';
 import styles from './styles';
 
-const RegisterScreen = (props) => {
+const RegisterScreen = () => {
   return (
     <ImageBackground
       resizeMode='cover'
       style={styles.background}
       blurRadius={10}
       source={require('../../assets/background.png')}>
-      <View style={styles.loginContainer}>
+      <View style={styles.registerContainer}>
         <Image
           style={styles.logo}
           source={require('../../assets/Register.png')}
         />
         <AppForm
           initialValues={{ name: '', email: '', password: '' }}
-          onSubmit={(values) =>
-            console.log(
-              'name: ',
-              values.name,
-              'email:',
-              values.email,
-              'password:',
-              values.password
-            )
-          }>
+          onSubmit={handleSignUp}>
           <AppFormField
             placeholder='Display Name'
             icon='account'

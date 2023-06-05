@@ -7,7 +7,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  loginContainer: {
+  registerContainer: {
     alignItems: 'center',
     backgroundColor: colors.secondary,
     borderColor: colors.medium,

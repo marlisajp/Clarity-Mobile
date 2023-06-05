@@ -1,15 +1,16 @@
-import { StyleSheet } from 'react-native';
-import LoginScreen from './app/screens/LoginScreen/LoginScreen';
-import WelcomeScreen from './app/screens/WelcomeScreen/WelcomeScreen';
-import Screen from './app/components/Screen';
-import RegisterScreen from './app/screens/RegisterScreen/RegisterScreen';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from './firebaseConfig';
+
+initializeApp(firebaseConfig);
+
+import { NavigationContainer } from '@react-navigation/native';
+import AuthNavigator from './app/navigation/AuthNavigator';
+import navigationTheme from './app/navigation/navigationTheme';
 
 export default function App() {
-  return <RegisterScreen />;
+  return (
+    <NavigationContainer theme={navigationTheme}>
+      <AuthNavigator />
+    </NavigationContainer>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
