@@ -2,7 +2,7 @@ import React from 'react';
 import { ImageBackground, Image, View } from 'react-native';
 
 import { AppForm, AppFormField, SubmitButton } from '../../components/Forms';
-import { handleSignUp } from '../../firebase/service';
+// import { handleSignUp } from '../../firebase/service';
 import styles from './styles';
 
 const RegisterScreen = () => {
