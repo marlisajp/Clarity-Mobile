@@ -1,6 +1,5 @@
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from './firebaseConfig';
-
 initializeApp(firebaseConfig);
 
 import { NavigationContainer } from '@react-navigation/native';
