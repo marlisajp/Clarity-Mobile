@@ -21,6 +21,7 @@ const LoginScreen = () => {
       console.log('Error signing in:', error.code, error.message);
     }
   };
+
   return (
     <ImageBackground
       resizeMode='cover'

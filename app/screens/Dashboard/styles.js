@@ -3,9 +3,7 @@ import colors from '../../config/colors';
 
 export default StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
+    padding: 20,
     width: '100%',
   },
   text: {

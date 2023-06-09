@@ -12,12 +12,13 @@ const Screen = ({ children, style }) => {
 };
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: Constants.statusBarHeight,
+    backgroundColor: colors.dark,
     flex: 1,
+    paddingTop: Constants.statusBarHeight,
   },
   view: {
     flex: 1,
-    backgroundColor: colors.light,
+    backgroundColor: colors.secondary,
   },
 });
 export default Screen;
