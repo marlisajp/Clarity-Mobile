@@ -12,4 +12,7 @@ export default Object.freeze({
   ADDTODO: 'Add Todo',
   SINGLETODO: 'Single Todo',
   EDITTODO: 'Edit Todo',
+  NOTESMAINSCREEN: 'NotesMainScreen',
+  TODOSMAINSCREEN: 'TodosMainScreen',
+  ACCOUNTMAINSCREEN: 'AccountMainScreen',
 });

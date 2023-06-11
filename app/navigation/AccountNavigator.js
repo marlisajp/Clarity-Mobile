@@ -10,9 +10,9 @@ const Stack = createStackNavigator();
 
 const AccountNavigator = () => (
   <Stack.Navigator
-    initialRouteName={routes.ACCOUNT}
+    initialRouteName={routes.ACCOUNTMAINSCREEN}
     screenOptions={{ headerShown: false }}>
-    <Stack.Screen name={routes.ACCOUNT} component={AccountScreen} />
+    <Stack.Screen name={routes.ACCOUNTMAINSCREEN} component={AccountScreen} />
     <Stack.Screen name={routes.EDITPROFILE} component={EditProfileScreen} />
   </Stack.Navigator>
 );

@@ -12,9 +12,9 @@ const Stack = createStackNavigator();
 
 const TodoNavigator = () => (
   <Stack.Navigator
-    initialRouteName={routes.TODO}
+    initialRouteName={routes.TODOSMAINSCREEN}
     screenOptions={{ headerShown: false }}>
-    <Stack.Screen name={routes.TODO} component={ToDoScreen} />
+    <Stack.Screen name={routes.TODOSMAINSCREEN} component={ToDoScreen} />
     <Stack.Screen
       name={routes.ADDTODO}
       component={TodoForm}

@@ -16,7 +16,7 @@ import useQuote from '../../hooks/useQuote';
 const cards = [
   {
     id: 1,
-    title: 'To-Dos',
+    title: 'To Dos',
     latest: 'do laundry',
     image: require('../../assets/cards/todo.jpg'),
     routeName: 'TODO',

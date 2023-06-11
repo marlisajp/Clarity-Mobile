@@ -10,11 +10,11 @@ import Header from '../components/Header';
 
 const Stack = createStackNavigator();
 
-const NoteNavigator = (props) => (
+const NoteNavigator = () => (
   <Stack.Navigator
-    initialRouteName={routes.NOTE}
+    initialRouteName={routes.NOTESMAINSCREEN}
     screenOptions={{ headerShown: false }}>
-    <Stack.Screen name={routes.NOTE} component={NotesScreen} />
+    <Stack.Screen name={routes.NOTESMAINSCREEN} component={NotesScreen} />
     <Stack.Screen
       name={routes.ADDNOTE}
       component={AddNoteScreen}

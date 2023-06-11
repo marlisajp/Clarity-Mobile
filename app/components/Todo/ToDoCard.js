@@ -13,10 +13,11 @@ import { updateTodoStatus } from '../../functions/update';
 import useTodos from '../../hooks/useTodos';
 
 const ToDoCard = ({ id, numberOfLines = 1, style }) => {
-  const navigation = useNavigation();
   const [menuVisible, setMenuVisible] = useState(false);
   const openMenu = () => setMenuVisible(true);
   const closeMenu = () => setMenuVisible(false);
+
+  const navigation = useNavigation();
   const user = useAuth();
   const { todos } = useTodos(user?.uid);
 
