@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Button } from 'react-native';
-import { ref, push } from 'firebase/database';
+import { View, StyleSheet } from 'react-native';
 
-import { getFirebaseDatabase } from '../../../firebaseConfig';
-import { AppForm, AppFormField, SubmitButton } from '../Forms';
+import ActivityIndicator from '../ActivityIndicator';
 import Screen from '../Screen';
 import Header from '../Header';
-import AppFormPicker from '../Forms/AppFormPicker';
-import AppPickerItem from '../Forms/AppPickerItem';
-import colors from '../../config/colors';
-import routes from '../../navigation/routes';
 import useAuth from '../../hooks/useAuth';
+import { createTodo } from '../../functions/create';
+import {
+  AppForm,
+  AppFormField,
+  SubmitButton,
+  AppFormPicker,
+  AppPickerItem,
+} from '../Forms';
 
 const statusItems = [
   {
@@ -49,17 +51,16 @@ const priorityItems = [
 ];
 
 const TodoForm = ({ navigation }) => {
-  const [status, setStatus] = useState();
+  const [loading, setLoading] = useState(false);
   const user = useAuth();
 
-  const createTodo = async (todo, { resetForm }) => {
-    todo.tags = todo.tags.split(',').map((tag) => tag.trim());
-    const database = getFirebaseDatabase();
-    const todosRef = ref(database, 'todos');
-    await push(todosRef, { ...todo, uid: user.uid });
-    resetForm();
-    navigation.navigate(routes.TODO);
+  const handleCreateTodo = async (values, { resetForm }) => {
+    setLoading(true);
+    await createTodo(values, resetForm, user, navigation);
+    setLoading(false);
   };
+
+  if (loading) return <ActivityIndicator visible={true} />;
 
   return (
     <Screen style={styles.container}>
@@ -73,7 +74,7 @@ const TodoForm = ({ navigation }) => {
             dueDate: '',
             tags: [],
           }}
-          onSubmit={createTodo}>
+          onSubmit={handleCreateTodo}>
           <AppFormField
             placeholder='To Do'
             icon='playlist-edit'
@@ -118,11 +119,6 @@ const TodoForm = ({ navigation }) => {
           />
           <SubmitButton title='Create To Do' color='dark' />
         </AppForm>
-        <Button
-          title='Cancel'
-          color={colors.dark}
-          onPress={() => navigation.navigate(routes.TODO)}
-        />
       </View>
     </Screen>
   );

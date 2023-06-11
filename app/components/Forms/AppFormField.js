@@ -3,7 +3,13 @@ import { useFormikContext } from 'formik';
 
 import AppTextInput from './AppTextInput';
 
-function AppFormField({ maxLength, name, width, ...otherProps }) {
+function AppFormField({
+  maxLength,
+  name,
+  width,
+  numberOfLines,
+  ...otherProps
+}) {
   const { setFieldTouched, setFieldValue, errors, touched, values } =
     useFormikContext();
 
@@ -14,6 +20,7 @@ function AppFormField({ maxLength, name, width, ...otherProps }) {
       value={values[name]}
       width={width}
       maxLength={maxLength}
+      numberOfLines={numberOfLines}
       {...otherProps}
     />
   );

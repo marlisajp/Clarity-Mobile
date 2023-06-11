@@ -1,42 +1,22 @@
-import React, { useState, useEffect } from 'react';
+// ToDoScreen.js
+import React from 'react';
 import { FlatList, Text } from 'react-native';
-import { ref, onValue } from 'firebase/database';
 
 import Screen from '../../components/Screen';
 import ToDoCard from '../../components/Todo/ToDoCard';
 import styles from '../../components/Todo/styles';
 import Header from '../../components/Header';
 import Add from '../../components/Add/Add';
+import ActivityIndicator from '../../components/ActivityIndicator';
 import routes from '../../navigation/routes';
-import { getFirebaseDatabase } from '../../../firebaseConfig';
 import useAuth from '../../hooks/useAuth';
+import useTodos from '../../hooks/useTodos';
 
 const ToDoScreen = ({ navigation }) => {
-  const [todos, setTodos] = useState({});
   const user = useAuth();
-  console.log('user in todoscreen', user);
+  const { todos, loading } = useTodos(user?.uid);
 
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-
-    const database = getFirebaseDatabase();
-    const todosRef = ref(database, 'todos');
-
-    const unsubscribe = onValue(todosRef, (snapshot) => {
-      const data = snapshot.val();
-      const todosArray = Object.entries(data || {}).map(([id, value]) => ({
-        id,
-        ...value,
-      }));
-
-      const userTodos = todosArray.filter((todo) => todo.uid === user.uid);
-      setTodos(userTodos);
-    });
-
-    return () => unsubscribe();
-  }, [user?.uid]);
+  if (loading) return <ActivityIndicator visible={true} />;
 
   return (
     <Screen>

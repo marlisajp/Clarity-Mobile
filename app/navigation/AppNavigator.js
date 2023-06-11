@@ -3,14 +3,12 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import DashboardScreen from '../screens/Dashboard/DashboardScreen';
-import AccountScreen from '../screens/Account/AccountScreen';
-import ToDoScreen from '../screens/ToDo/ToDoScreen';
-import NotesScreen from '../screens/Notes/NotesScreen';
 import routes from './routes';
 import colors from '../config/colors';
 import TodoNavigator from './TodoNavigator';
 import CalendarScreen from '../screens/Calendar/CalendarScreen';
 import AccountNavigator from './AccountNavigator';
+import NoteNavigator from './NoteNavigator';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -50,7 +48,7 @@ const AppNavigator = (props) => {
       />
       <Tab.Screen
         name={routes.NOTE}
-        component={NotesScreen}
+        component={NoteNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons

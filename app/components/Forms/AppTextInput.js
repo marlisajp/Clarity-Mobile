@@ -4,7 +4,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import defaultStyles from '../../config/styles';
 
-function AppTextInput({ maxLength, icon, width = '95%', ...otherProps }) {
+const AppTextInput = ({
+  maxLength,
+  icon,
+  width = '95%',
+  numberOfLines = 1,
+  ...otherProps
+}) => {
   return (
     <View style={[styles.container, { width }]}>
       {icon && (
@@ -16,14 +22,19 @@ function AppTextInput({ maxLength, icon, width = '95%', ...otherProps }) {
         />
       )}
       <TextInput
+        multiline
+        numberOfLines={numberOfLines}
         maxLength={maxLength}
         placeholderTextColor={defaultStyles.colors.medium}
-        style={defaultStyles.text}
+        style={[
+          defaultStyles.text,
+          { paddingRight: 15, height: numberOfLines * 20 },
+        ]}
         {...otherProps}
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

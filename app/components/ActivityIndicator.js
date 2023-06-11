@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import AnimatedLottieView from 'lottie-react-native';
+import colors from '../config/colors';
 
 const ActivityIndicator = ({ visible = false }) => {
   if (!visible) return null;
   return (
-    <View>
+    <View style={styles.overlay}>
       <AnimatedLottieView
         source={require('../assets/animations/loading.json')}
         autoPlay
@@ -18,9 +19,9 @@ const ActivityIndicator = ({ visible = false }) => {
 const styles = StyleSheet.create({
   overlay: {
     position: 'absolute',
-    backgroundColor: 'white',
+    backgroundColor: colors.primary,
     height: '100%',
-    opacity: 0.8,
+    opacity: 0.5,
     width: '100%',
     zIndex: 1,
   },

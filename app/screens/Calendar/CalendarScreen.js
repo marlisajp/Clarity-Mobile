@@ -6,11 +6,11 @@ import {
   AgendaList,
 } from 'react-native-calendars';
 
+import ListItem from '../../components/Lists/ListItem';
 import Screen from '../../components/Screen';
 import Header from '../../components/Header';
 import Add from '../../components/Add/Add';
 import colors from '../../config/colors';
-import ListItem from '../../components/Lists/ListItem';
 
 const CalendarScreen = (props) => {
   const [selectedDate, setSelectedDate] = useState(

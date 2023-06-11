@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
 import ListItem from '../../components/Lists/ListItem';
 import ListItemSeparator from '../../components/Lists/ListItemSeparator';
@@ -7,6 +7,10 @@ import Screen from '../../components/Screen';
 import Header from '../../components/Header';
 import { FlatList } from 'react-native';
 import Add from '../../components/Add/Add';
+import routes from '../../navigation/routes';
+import useAuth from '../../hooks/useAuth';
+import useNotes from '../../hooks/useNotes';
+import ActivityIndicator from '../../components/ActivityIndicator';
 
 const notes = [
   {
@@ -46,23 +50,36 @@ const notes = [
   },
 ];
 
-const NotesScreen = () => {
+const NotesScreen = ({ navigation }) => {
+  const user = useAuth();
+  const { notes, loading } = useNotes(user?.uid);
+
+  if (loading) return <ActivityIndicator visible={true} />;
+
   return (
     <Screen style={styles.container}>
       <Header title='Notes' iconName='note-text-outline' />
-      <Add title='Note' iconName='note-plus-outline' />
-      <FlatList
-        data={notes}
-        ItemSeparatorComponent={ListItemSeparator}
-        keyExtractor={(note) => note.title}
-        renderItem={({ item }) => (
-          <ListItem
-            // onPress={() => navigation.navigate(item.targetScreen)}
-            title={item.title}
-            subTitle={item.content}
-          />
-        )}
+      <Add
+        title='Note'
+        iconName='note-plus-outline'
+        onPress={() => navigation.navigate(routes.ADDNOTE)}
       />
+      {notes.length > 0 ? (
+        <FlatList
+          data={notes}
+          ItemSeparatorComponent={ListItemSeparator}
+          keyExtractor={(note) => note.title}
+          renderItem={({ item }) => (
+            <ListItem
+              // onPress={() => navigation.navigate(item.targetScreen)}
+              title={item.title}
+              subTitle={item.content}
+            />
+          )}
+        />
+      ) : (
+        <Text>No Notes Created</Text>
+      )}
     </Screen>
   );
 };
