@@ -35,11 +35,11 @@ const ToDoScreen = ({ navigation }) => {
           renderItem={({ item }) => (
             <ToDoCard
               id={item.id}
-              content={item.content}
-              completed={item.completed}
-              dueDate={item.dueDate}
-              priority={item.priority.label}
-              tags={item.tags}
+              // content={item.content}
+              // status={item.status ? item.status.label : 'Not Started'}
+              // dueDate={item.dueDate}
+              // priority={item.priority ? item.priority.label : 'Low'}
+              // tags={item.tags}
             />
           )}
         />

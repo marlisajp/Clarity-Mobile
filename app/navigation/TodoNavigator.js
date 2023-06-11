@@ -6,6 +6,7 @@ import TodoForm from '../components/Todo/TodoForm';
 import ToDoScreen from '../screens/ToDo/ToDoScreen';
 import SingleToDoScreen from '../screens/ToDo/SingleToDoScreen';
 import colors from '../config/colors';
+import EditTodo from '../screens/ToDo/EditTodo';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,7 @@ const TodoNavigator = () => (
       }}
     />
     <Stack.Screen name={routes.SINGLETODO} component={SingleToDoScreen} />
+    <Stack.Screen name={routes.EDITTODO} component={EditTodo} />
   </Stack.Navigator>
 );
 

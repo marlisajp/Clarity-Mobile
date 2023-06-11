@@ -36,8 +36,11 @@ function AppPicker({
             />
           )}
           <Text style={styles.text}>
-            {selectedItem ? selectedItem.label : placeholder}
+            {selectedItem && selectedItem.label
+              ? selectedItem.label
+              : placeholder}
           </Text>
+
           <MaterialCommunityIcons
             name='chevron-down'
             size={20}

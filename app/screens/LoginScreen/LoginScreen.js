@@ -1,5 +1,10 @@
 import React from 'react';
-import { ImageBackground, Image, View } from 'react-native';
+import {
+  ImageBackground,
+  Image,
+  View,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 import styles from './LoginScreenStyles';

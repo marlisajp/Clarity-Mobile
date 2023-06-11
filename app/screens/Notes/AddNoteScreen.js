@@ -7,6 +7,7 @@ import Screen from '../../components/Screen';
 import Header from '../../components/Header';
 import useAuth from '../../hooks/useAuth';
 import ActivityIndicator from '../../components/ActivityIndicator';
+import defaultStyles from '../../config/styles';
 
 const AddNoteScreen = ({ navigation }) => {
   const user = useAuth();
@@ -42,6 +43,8 @@ const AddNoteScreen = ({ navigation }) => {
             autoCorrect={false}
             name='content'
             numberOfLines={4}
+            multiline={true}
+            style={{ paddingRight: 20, height: 80 }}
           />
           <AppFormField
             placeholder='Tags (comma-separated)'

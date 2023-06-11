@@ -12,7 +12,7 @@ export default useTodos = (uid) => {
     }
     setLoading(true);
     const database = getFirebaseDatabase();
-    const todosRef = ref(database, 'todos');
+    const todosRef = ref(database, 'todos/' + uid);
 
     const unsubscribe = onValue(todosRef, (snapshot) => {
       const data = snapshot.val();

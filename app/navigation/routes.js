@@ -11,4 +11,5 @@ export default Object.freeze({
   CALENDAR: 'Calendar',
   ADDTODO: 'Add Todo',
   SINGLETODO: 'Single Todo',
+  EDITTODO: 'Edit Todo',
 });

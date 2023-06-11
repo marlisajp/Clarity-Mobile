@@ -3,13 +3,15 @@ import colors from '../../config/colors';
 
 export default StyleSheet.create({
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    position: 'absolute',
+    bottom: 3,
+    right: 5,
+    zIndex: 1,
   },
   card: {
     alignSelf: 'center',
     backgroundColor: colors.light,
-    height: 240,
+    height: 180,
     marginBottom: 15,
     width: '90%',
   },
@@ -17,23 +19,22 @@ export default StyleSheet.create({
     padding: 20,
   },
   content: {
-    marginTop: 12,
+    marginTop: 8,
   },
   contentContainer: {
     height: '100%',
-
     justifyContent: 'space-around',
   },
   date: {
     position: 'absolute',
     right: 10,
     textAlign: 'right',
-    top: 5,
+    top: 3,
     width: '100%',
   },
   detailsContainer: {
     backgroundColor: colors.primaryTransparent,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: colors.medium,
     borderRadius: 15,
     flexDirection: 'row',
@@ -41,6 +42,7 @@ export default StyleSheet.create({
   },
   detailHeader: {
     fontWeight: 'bold',
+    color: colors.dark,
   },
   list: {
     width: '100%',
@@ -48,7 +50,7 @@ export default StyleSheet.create({
   priority: {},
   tag: {
     marginRight: 10,
-    height: 29,
+    backgroundColor: colors.light,
   },
   priorityContainer: {
     alignItems: 'center',

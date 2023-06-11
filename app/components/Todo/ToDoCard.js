@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { FlatList, TouchableOpacity, View, Alert } from 'react-native';
-import { IconButton, Card, Text, Chip } from 'react-native-paper';
+import { IconButton, Card, Text, Chip, Menu } from 'react-native-paper';
 import { remove, ref } from 'firebase/database';
 import { useNavigation } from '@react-navigation/native';
 
@@ -8,18 +8,21 @@ import { getFirebaseDatabase } from '../../../firebaseConfig';
 import colors from '../../config/colors';
 import styles from './styles';
 import routes from '../../navigation/routes';
+import useAuth from '../../hooks/useAuth';
+import { updateTodoStatus } from '../../functions/update';
+import useTodos from '../../hooks/useTodos';
 
-const ToDoCard = ({
-  id,
-  content,
-  priority,
-  completed,
-  dueDate,
-  tags,
-  numberOfLines = 1,
-  style,
-}) => {
+const ToDoCard = ({ id, numberOfLines = 1, style }) => {
   const navigation = useNavigation();
+  const [menuVisible, setMenuVisible] = useState(false);
+  const openMenu = () => setMenuVisible(true);
+  const closeMenu = () => setMenuVisible(false);
+  const user = useAuth();
+  const { todos } = useTodos(user?.uid);
+
+  const todo = useMemo(() => todos.find((todo) => todo.id === id), [todos, id]);
+  const { content, priority, status, dueDate, tags } = todo || {};
+
   const handleDeleteTodo = async () => {
     try {
       Alert.alert('Delete', 'Are you sure you want to delete this to do?', [
@@ -27,7 +30,7 @@ const ToDoCard = ({
           text: 'Yes',
           onPress: async () => {
             const database = getFirebaseDatabase();
-            const todoRef = ref(database, `todos/${id}`);
+            const todoRef = ref(database, `todos/${user?.uid}/${id}`);
             await remove(todoRef);
           },
         },
@@ -69,7 +72,7 @@ const ToDoCard = ({
               Priority:
             </Text>
             <Text numberOfLines={1} variant='bodyLarge'>
-              {priority}
+              {priority && priority.label}
             </Text>
           </View>
           <View style={styles.priorityContainer}>
@@ -77,52 +80,82 @@ const ToDoCard = ({
               Status:
             </Text>
             <Text numberOfLines={1} variant='bodyLarge'>
-              {completed ? 'Completed' : 'Not Complete'}
+              {status && status.label}
             </Text>
           </View>
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity>
-            <IconButton
-              containerColor={colors.orange}
-              iconColor={colors.white}
-              icon='reload'
-              mode='outlined'
+          <Menu
+            contentStyle={{
+              backgroundColor: colors.light,
+              borderWidth: 3,
+              borderColor: colors.secondary,
+            }}
+            visible={menuVisible}
+            onDismiss={closeMenu}
+            anchor={
+              <TouchableOpacity onPress={openMenu}>
+                <IconButton
+                  containerColor={colors.dark}
+                  iconColor={colors.white}
+                  icon='menu'
+                  mode='contained'
+                />
+              </TouchableOpacity>
+            }>
+            <Menu.Item
+              leadingIcon='run'
+              onPress={() => {
+                updateTodoStatus(user?.uid, id, 'In Progress');
+                closeMenu();
+              }}
+              title='Start'
             />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <IconButton
-              containerColor={colors.green}
-              iconColor={colors.white}
-              icon='checkbox-marked'
-              mode='outlined'
+            <Menu.Item
+              leadingIcon='check-circle'
+              onPress={() => {
+                updateTodoStatus(user?.uid, id, 'Completed');
+                closeMenu();
+              }}
+              title='Complete'
             />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <IconButton
-              containerColor={colors.yellow}
-              iconColor={colors.black}
-              icon='file-document-edit-outline'
-              mode='outlined'
+
+            <Menu.Item
+              leadingIcon='file-edit'
+              onPress={() => {
+                navigation.navigate(routes.EDITTODO, {
+                  id,
+                  content,
+                  priority,
+                  status,
+                  tags,
+                  dueDate,
+                });
+                closeMenu();
+              }}
+              title='Edit todo'
             />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleDeleteTodo}>
-            <IconButton
-              containerColor={colors.danger}
-              iconColor={colors.white}
-              icon='delete-forever'
-              mode='outlined'
+            <Menu.Item
+              leadingIcon='delete-forever'
+              onPress={() => {
+                closeMenu();
+                handleDeleteTodo();
+              }}
+              title='Delete'
             />
-          </TouchableOpacity>
+          </Menu>
         </View>
-        {tags && (
+        {tags ? (
           <FlatList
             style={styles.tagsContainer}
             data={tags}
             keyExtractor={(tag) => tag}
             renderItem={({ item }) => (
               <Chip
+                mode='flat'
+                selectedColor={colors.dark}
+                compact={true}
                 elevated={true}
                 style={styles.tag}
                 icon='tag'
@@ -131,6 +164,8 @@ const ToDoCard = ({
               </Chip>
             )}
           />
+        ) : (
+          <Chip mode='outlined' icon='tag-off-outline' />
         )}
       </Card.Content>
     </Card>

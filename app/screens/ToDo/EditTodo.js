@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-
-import ActivityIndicator from '../ActivityIndicator';
-import Screen from '../Screen';
-import Header from '../Header';
-import useAuth from '../../hooks/useAuth';
-import { createTodo } from '../../functions/create';
+import { View, StyleSheet, Button } from 'react-native';
+import Screen from '../../components/Screen';
+import Header from '../../components/Header';
 import {
   AppForm,
   AppFormField,
   SubmitButton,
   AppFormPicker,
   AppPickerItem,
-} from '../Forms';
+} from '../../components/Forms';
+import { useRoute } from '@react-navigation/native';
+import { updateTodo } from '../../functions/update';
+import useAuth from '../../hooks/useAuth';
+import ActivityIndicator from '../../components/ActivityIndicator';
+import useTodos from '../../hooks/useTodos';
 
 const statusItems = [
   {
@@ -50,31 +51,38 @@ const priorityItems = [
   },
 ];
 
-const TodoForm = ({ navigation }) => {
-  const [loading, setLoading] = useState(false);
+const EditTodo = ({ navigation }) => {
+  const route = useRoute();
   const user = useAuth();
+  const [loading, setLoading] = useState(false);
+  const { id, content, priority, status, tags, dueDate } = route.params;
+  const { todos } = useTodos(user?.uid);
 
-  const handleCreateTodo = async (values, { resetForm }) => {
+  const handleUpdateTodo = async (values, { resetForm }) => {
     setLoading(true);
-    await createTodo(values, resetForm, user, navigation);
+    const { content, priority, status, dueDate, tags } = values;
+    const newTags = tags ? tags.split(', ').map((tag) => tag.trim()) : [];
+    await updateTodo(user.uid, id, content, priority, status, dueDate, newTags);
     setLoading(false);
+    resetForm();
+    navigation.goBack();
   };
 
   if (loading) return <ActivityIndicator visible={true} />;
 
   return (
     <Screen style={styles.container}>
-      <Header title='Create To Do' iconName='playlist-edit' />
+      <Header title='Edit Todo' iconName='note-edit' />
       <View style={styles.formContainer}>
         <AppForm
           initialValues={{
-            content: '',
-            priority: '',
-            status: '',
-            dueDate: '',
-            tags: '',
+            content: content || '',
+            priority: priority || '',
+            status: status || '',
+            dueDate: dueDate || '',
+            tags: tags ? tags.join(', ') : '',
           }}
-          onSubmit={handleCreateTodo}>
+          onSubmit={handleUpdateTodo}>
           <AppFormField
             placeholder='To Do'
             icon='playlist-edit'
@@ -83,7 +91,6 @@ const TodoForm = ({ navigation }) => {
             name='content'
             maxLength={55}
           />
-
           <AppFormField
             placeholder='Due Date'
             icon='calendar'
@@ -91,7 +98,6 @@ const TodoForm = ({ navigation }) => {
             autoCorrect={false}
             name='dueDate'
           />
-          {/* <DatePickerComponent /> */}
           <AppFormPicker
             icon='priority-high'
             items={priorityItems}
@@ -117,17 +123,19 @@ const TodoForm = ({ navigation }) => {
             autoCorrect={false}
             name='tags'
           />
-          <SubmitButton title='Create To Do' color='dark' />
+          <SubmitButton title='Update To Do' color='dark' />
         </AppForm>
+        <Button title='Cancel' onPress={() => navigation.goBack()} />
       </View>
     </Screen>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {},
   formContainer: {
     padding: 10,
   },
 });
 
-export default TodoForm;
+export default EditTodo;

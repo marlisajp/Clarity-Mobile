@@ -12,7 +12,7 @@ export default useNotes = (uid) => {
     }
     setLoading(true);
     const database = getFirebaseDatabase();
-    const notesRef = ref(database, 'notes');
+    const notesRef = ref(database, 'notes/' + uid);
 
     const unsubscribe = onValue(notesRef, (snapshot) => {
       const data = snapshot.val();

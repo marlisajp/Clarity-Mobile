@@ -5,10 +5,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import defaultStyles from '../../config/styles';
 
 const AppTextInput = ({
+  multiline = false,
+  style,
   maxLength,
   icon,
   width = '95%',
   numberOfLines = 1,
+  secureTextEntry,
   ...otherProps
 }) => {
   return (
@@ -22,14 +25,12 @@ const AppTextInput = ({
         />
       )}
       <TextInput
-        multiline
+        style={[defaultStyles.text, style]}
+        multiline={multiline} // use the passed in prop here
         numberOfLines={numberOfLines}
         maxLength={maxLength}
+        secureTextEntry={secureTextEntry}
         placeholderTextColor={defaultStyles.colors.medium}
-        style={[
-          defaultStyles.text,
-          { paddingRight: 15, height: numberOfLines * 20 },
-        ]}
         {...otherProps}
       />
     </View>
