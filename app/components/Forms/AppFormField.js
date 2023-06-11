@@ -3,7 +3,7 @@ import { useFormikContext } from 'formik';
 
 import AppTextInput from './AppTextInput';
 
-function AppFormField({ name, width, ...otherProps }) {
+function AppFormField({ maxLength, name, width, ...otherProps }) {
   const { setFieldTouched, setFieldValue, errors, touched, values } =
     useFormikContext();
 
@@ -13,6 +13,7 @@ function AppFormField({ name, width, ...otherProps }) {
       onChangeText={(text) => setFieldValue(name, text)}
       value={values[name]}
       width={width}
+      maxLength={maxLength}
       {...otherProps}
     />
   );

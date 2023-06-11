@@ -11,6 +11,7 @@ export default useAuth = () => {
         const userData = {
           displayName: firebaseUser.displayName,
           email: firebaseUser.email,
+          uid: firebaseUser.uid,
         };
         setUser(userData);
       } else {

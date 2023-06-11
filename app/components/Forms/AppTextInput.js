@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import defaultStyles from '../../config/styles';
 
-function AppTextInput({ icon, width = '95%', ...otherProps }) {
+function AppTextInput({ maxLength, icon, width = '95%', ...otherProps }) {
   return (
     <View style={[styles.container, { width }]}>
       {icon && (
@@ -16,6 +16,7 @@ function AppTextInput({ icon, width = '95%', ...otherProps }) {
         />
       )}
       <TextInput
+        maxLength={maxLength}
         placeholderTextColor={defaultStyles.colors.medium}
         style={defaultStyles.text}
         {...otherProps}

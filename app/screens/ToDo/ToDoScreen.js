@@ -1,78 +1,71 @@
-import React from 'react';
-import { FlatList } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { FlatList, Text } from 'react-native';
+import { ref, onValue } from 'firebase/database';
 
 import Screen from '../../components/Screen';
 import ToDoCard from '../../components/Todo/ToDoCard';
 import styles from '../../components/Todo/styles';
 import Header from '../../components/Header';
-import colors from '../../config/colors';
+import Add from '../../components/Add/Add';
+import routes from '../../navigation/routes';
+import { getFirebaseDatabase } from '../../../firebaseConfig';
+import useAuth from '../../hooks/useAuth';
 
-const todos = [
-  {
-    id: 1,
-    content: 'Complete project report',
-    priority: 'high',
-    completed: false,
-    dueDate: '2023-06-15',
-    tags: ['work', 'reports'],
-  },
-  {
-    id: 2,
-    content: 'Grocery shopping',
-    priority: 'low',
-    completed: true,
-    dueDate: '2023-06-07',
-    tags: ['personal', 'shopping'],
-  },
-  {
-    id: 3,
-    content: 'Gym at 5 PM',
-    priority: 'medium',
-    completed: false,
-    dueDate: '2023-06-06',
-    tags: ['personal', 'health'],
-  },
-  {
-    id: 4,
-    content: 'Schedule meeting with team',
-    priority: 'high',
-    completed: false,
-    dueDate: '2023-06-08',
-    tags: ['work', 'meetings'],
-  },
-  {
-    id: 5,
-    content: 'Buy birthday gift for John',
-    priority: 'medium',
-    completed: false,
-    dueDate: '2023-06-20',
-    tags: ['personal', 'events'],
-  },
-];
+const ToDoScreen = ({ navigation }) => {
+  const [todos, setTodos] = useState({});
+  const user = useAuth();
+  console.log('user in todoscreen', user);
 
-const ToDoScreen = () => {
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+
+    const database = getFirebaseDatabase();
+    const todosRef = ref(database, 'todos');
+
+    const unsubscribe = onValue(todosRef, (snapshot) => {
+      const data = snapshot.val();
+      const todosArray = Object.entries(data || {}).map(([id, value]) => ({
+        id,
+        ...value,
+      }));
+
+      const userTodos = todosArray.filter((todo) => todo.uid === user.uid);
+      setTodos(userTodos);
+    });
+
+    return () => unsubscribe();
+  }, [user?.uid]);
+
   return (
     <Screen>
-      <Header
-        title="To Do's"
-        iconName='format-list-checks'
-        iconSize={50}
-        iconColor={colors.primary}
+      <Header title="To Do's" iconName='format-list-checks' iconSize={50} />
+      <Add
+        onPress={() => navigation.navigate(routes.ADDTODO)}
+        title='To Do'
+        iconName='playlist-plus'
       />
-      <FlatList
-        contentContainerStyle={styles.list}
-        data={todos}
-        keyExtractor={(todo) => todo.id.toString()}
-        renderItem={({ item }) => (
-          <ToDoCard
-            content={item.content}
-            priority={item.priority}
-            completed={item.completed}
-            dueDate={item.dueDate}
-            tags={item.tags}
-          />
-        )}
-      />
+      {todos.length > 0 ? (
+        <FlatList
+          scrollsToTop={true}
+          contentContainerStyle={styles.list}
+          data={todos}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <ToDoCard
+              id={item.id}
+              content={item.content}
+              completed={item.completed}
+              dueDate={item.dueDate}
+              priority={item.priority.label}
+              tags={item.tags}
+            />
+          )}
+        />
+      ) : (
+        <Text>No Todo's Created</Text>
+      )}
     </Screen>
   );
 };

@@ -4,7 +4,7 @@ import colors from '../../config/colors';
 export default StyleSheet.create({
   card: {
     marginBottom: 20,
-    height: 230,
+    height: 210,
   },
 
   detailsContainer: {
@@ -17,7 +17,7 @@ export default StyleSheet.create({
     right: 0,
   },
   image: {
-    height: 150,
+    height: 130,
     width: '100%',
   },
   subTitle: {
@@ -27,6 +27,6 @@ export default StyleSheet.create({
   title: {
     fontWeight: 'bold',
     color: colors.primary,
-    marginBottom: 7,
+    marginBottom: 5,
   },
 });

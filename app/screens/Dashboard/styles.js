@@ -6,6 +6,15 @@ export default StyleSheet.create({
     padding: 20,
     width: '100%',
   },
+  modalContainer: {
+    height: 300,
+    backgroundColor: colors.white,
+    borderRadius: 20,
+  },
+  quoteContainer: {
+    width: '90%',
+    alignSelf: 'center',
+  },
   text: {
     backgroundColor: colors.white,
   },
