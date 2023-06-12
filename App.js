@@ -11,6 +11,7 @@ import useAuth from './app/hooks/useAuth';
 import { name as appName } from './app.json';
 import AppNavigator from './app/navigation/AppNavigator';
 import { getFirebaseDatabase } from './firebaseConfig';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = () => {
   const user = useAuth();

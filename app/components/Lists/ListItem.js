@@ -17,32 +17,34 @@ const ListItem = ({
   showChevrons = true,
 }) => {
   return (
-    <TouchableOpacity
-      underlayColor={defaultStyles.colors.light}
-      onPress={onPress}>
-      <View style={styles.container}>
-        {IconComponent}
-        {image && <Image style={styles.image} source={image} />}
-        <View style={styles.detailsContainer}>
-          <Text style={styles.title} numberOfLines={1}>
-            {title}
-          </Text>
-          {subTitle && (
-            <Text style={styles.subTitle} numberOfLines={2}>
-              {subTitle}
+    <Swipeable renderRightActions={renderRightActions}>
+      <TouchableOpacity
+        underlayColor={defaultStyles.colors.light}
+        onPress={onPress}>
+        <View style={styles.container}>
+          {IconComponent}
+          {image && <Image style={styles.image} source={image} />}
+          <View style={styles.detailsContainer}>
+            <Text style={styles.title} numberOfLines={1}>
+              {title}
             </Text>
+            {subTitle && (
+              <Text style={styles.subTitle} numberOfLines={2}>
+                {subTitle}
+              </Text>
+            )}
+          </View>
+          {showChevrons && (
+            <MaterialCommunityIcons
+              style={styles.icon}
+              name='chevron-right'
+              size={30}
+              color={colors.medium}
+            />
           )}
         </View>
-        {showChevrons && (
-          <MaterialCommunityIcons
-            style={styles.icon}
-            name='chevron-right'
-            size={30}
-            color={colors.medium}
-          />
-        )}
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Swipeable>
   );
 };
 

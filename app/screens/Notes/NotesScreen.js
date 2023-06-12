@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, Alert } from 'react-native';
+import { ref, remove } from 'firebase/database';
 
 import ListItem from '../../components/Lists/ListItem';
 import ListItemSeparator from '../../components/Lists/ListItemSeparator';
@@ -11,6 +12,8 @@ import routes from '../../navigation/routes';
 import useAuth from '../../hooks/useAuth';
 import useNotes from '../../hooks/useNotes';
 import ActivityIndicator from '../../components/ActivityIndicator';
+import ListItemAction from '../../components/Lists/ListItemAction';
+import { getFirebaseDatabase } from '../../../firebaseConfig';
 
 const notes = [
   {
@@ -54,6 +57,26 @@ const NotesScreen = ({ navigation }) => {
   const user = useAuth();
   const { notes, loading } = useNotes(user?.uid);
 
+  const handleDeleteNote = (id) => {
+    try {
+      Alert.alert('Delete', 'Are you sure you want to delete this note?', [
+        {
+          text: 'Yes',
+          onPress: async () => {
+            const database = getFirebaseDatabase();
+            const notesRef = ref(database, `notes/${user?.uid}/${id}`);
+            await remove(notesRef);
+          },
+        },
+        {
+          text: 'No',
+        },
+      ]);
+    } catch (error) {
+      console.log('Failed to delete todo: ', error);
+    }
+  };
+
   if (loading) return <ActivityIndicator visible={true} />;
 
   return (
@@ -74,6 +97,9 @@ const NotesScreen = ({ navigation }) => {
               // onPress={() => navigation.navigate(item.targetScreen)}
               title={item.title}
               subTitle={item.content}
+              renderRightActions={() => (
+                <ListItemAction onPress={() => handleDeleteNote(item.id)} />
+              )}
             />
           )}
         />
