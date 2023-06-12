@@ -1,6 +1,6 @@
 import React from 'react';
-import { Image, TouchableWithoutFeedback, View } from 'react-native';
-import { IconButton, Avatar, Button, Card, Text } from 'react-native-paper';
+import { TouchableWithoutFeedback, View } from 'react-native';
+import { IconButton, Card, Text } from 'react-native-paper';
 
 import styles from './cardstyles';
 import colors from '../../config/colors';
@@ -8,7 +8,8 @@ import colors from '../../config/colors';
 const DashboardCard = ({
   title,
   date,
-  latest,
+  latestTodo,
+  latestNote,
   image,
   onPress,
   openModal,
@@ -51,7 +52,9 @@ const DashboardCard = ({
           </Text>
         )}
         <Text style={styles.subTitle} numberOfLines={1} variant='bodyLarge'>
-          {latest}
+          {title === 'To Dos' && latestTodo}
+          {title === 'Notes' && latestNote}
+          {title === 'Calendar' && 'placeholder for latest event'}
         </Text>
       </Card.Content>
       {showButton && (
