@@ -10,28 +10,24 @@ import routes from '../../navigation/routes';
 import QuickTodo from '../../components/Todo/QuickTodo';
 import useAuth from '../../hooks/useAuth';
 import useQuote from '../../hooks/useQuote';
-import useTodos from '../../hooks/useTodos';
-import useNotes from '../../hooks/useNotes';
+import useLatestContent from '../../hooks/useLatestContent';
 
 const cards = [
   {
     id: 1,
     title: 'To Dos',
-    latest: 'do laundry',
     image: require('../../assets/cards/todo.jpg'),
     routeName: 'TODO',
   },
   {
     id: 2,
     title: 'Notes',
-    latest: 'portfolio ideas! blah blah',
     image: require('../../assets/cards/notecard.jpg'),
     routeName: 'NOTE',
   },
   {
     id: 3,
     title: 'Calendar',
-    latest: 'June 6th, Appointment',
     image: require('../../assets/cards/calendar.jpg'),
     routeName: 'CALENDAR',
   },
@@ -42,21 +38,7 @@ const DashboardScreen = ({ navigation }) => {
   const uid = user?.uid;
   const [visible, setVisible] = useState(false);
 
-  const { todos } = useTodos(uid);
-  let currentTodo = '';
-
-  if (todos && todos.length > 0) {
-    currentTodo = todos[todos.length - 1].content;
-    console.log('current todo', currentTodo);
-  }
-
-  const { notes } = useNotes(uid);
-  let currentNote = '';
-
-  if (notes && notes.length > 0) {
-    currentNote = notes[notes.length - 1].title;
-    console.log('current note', currentNote);
-  }
+  const { latestTodo, latestNote, latestEvent } = useLatestContent(uid);
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -83,8 +65,9 @@ const DashboardScreen = ({ navigation }) => {
           <DashboardCard
             onPress={() => navigation.navigate(routes[item.routeName])}
             title={item.title}
-            latestTodo={currentTodo}
-            latestNote={currentNote}
+            latestTodo={latestTodo}
+            latestNote={latestNote}
+            latestEvent={latestEvent}
             image={item.image}
             openModal={showModal}
           />

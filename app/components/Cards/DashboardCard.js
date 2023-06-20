@@ -10,6 +10,7 @@ const DashboardCard = ({
   date,
   latestTodo,
   latestNote,
+  latestEvent,
   image,
   onPress,
   openModal,
@@ -54,7 +55,7 @@ const DashboardCard = ({
         <Text style={styles.subTitle} numberOfLines={1} variant='bodyLarge'>
           {title === 'To Dos' && latestTodo}
           {title === 'Notes' && latestNote}
-          {title === 'Calendar' && 'placeholder for latest event'}
+          {title === 'Calendar' && latestEvent}
         </Text>
       </Card.Content>
       {showButton && (

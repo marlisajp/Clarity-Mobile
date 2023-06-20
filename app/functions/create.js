@@ -22,4 +22,10 @@ const createNote = async (note, resetForm, user, navigation) => {
   navigation.navigate(routes.NOTE);
 };
 
-export { createTodo, createNote };
+const createEvent = async (newEvent, user, navigation) => {
+  const eventRef = ref(database, 'events/' + user.uid);
+  await push(eventRef, { ...newEvent, uid: user.uid });
+  navigation.navigate(routes.CALENDAR);
+};
+
+export { createTodo, createNote, createEvent };
