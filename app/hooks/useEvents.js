@@ -22,7 +22,16 @@ export default useEvents = (uid) => {
       }));
 
       const userEvents = eventsArray.filter((event) => event.uid === uid);
-      setEvents(userEvents);
+
+      // Sort the events by date
+      const sortedEvents = userEvents.sort((a, b) => {
+        const aDate = new Date(a.date);
+        const bDate = new Date(b.date);
+
+        return aDate - bDate; // For ascending order
+      });
+
+      setEvents(sortedEvents);
       setLoading(false);
     });
 
