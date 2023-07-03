@@ -13,12 +13,6 @@ Clarity Mobile App is a simple, intuitive mobile application for managing notes,
 
 ## Getting Started
 
-To get started with the Clarity Mobile App, follow these steps:
-
-1. Download the app from the [Apple App Store](https://www.apple.com/app-store/) or [Google Play Store](https://play.google.com/store)
-2. Open the app and register for a new account.
-3. Start creating and managing your notes!
-
 ## Screenshots
 
 ![App Screenshot](./app/assets/ClarityMobile.png)
@@ -35,9 +29,9 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
-## Connect with us
+## Connect with me
 
-You can follow us on our social media platforms for latest updates.
+You can follow me on my social media platforms for latest updates.
 
 ![Twitter](./app/assets/icons8-twitter-48.png) [Twitter](https://twitter.com/_marlisa_dev)
 ![LinkedIn](./app/assets/icons8-linkedin-48.png) [LinkedIn](https://www.linkedin.com/in/marlisapee/)
